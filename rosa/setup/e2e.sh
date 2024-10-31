@@ -20,11 +20,11 @@ VPC=$vpc ${PWD}/maestro.sh
 sleep 90 # wait the maestro service ready
 
 # Start Maestro servers
-exec kubectl relay service/maestro 8000:8000 -n maestro > ${output_dir}/maestro.svc.log 2>&1 &
+exec oc relay service/maestro 8000:8000 -n maestro > ${output_dir}/maestro.svc.log 2>&1 &
 maestro_server_pid=$!
 echo "Maestro server started: $maestro_server_pid"
 echo "$maestro_server_pid" > ${output_dir}/maestro_server.pid
-exec kubectl relay service/maestro-grpc 8090:8090 -n maestro > ${output_dir}/maestro-grpc.svc.log 2>&1 &
+exec oc relay service/maestro-grpc 8090:8090 -n maestro > ${output_dir}/maestro-grpc.svc.log 2>&1 &
 maestro_grpc_server_pid=$!
 echo "Maestro GRPC server started: $maestro_grpc_server_pid"
 echo "$maestro_grpc_server_pid" > ${output_dir}/maestro_grpc_server.pid
@@ -35,5 +35,5 @@ echo $consumer_id > ${output_dir}/consumer_id
 echo "Consumer $consumer_id is created"
 
 # Setup Maestro agent
-kubectl apply -f https://raw.githubusercontent.com/open-cluster-management-io/api/release-0.14/work/v1/0000_00_work.open-cluster-management.io_manifestworks.crd.yaml
+oc apply -f https://raw.githubusercontent.com/open-cluster-management-io/api/release-0.14/work/v1/0000_00_work.open-cluster-management.io_manifestworks.crd.yaml
 CONSUMER_ID=$consumer_id ${PWD}/agent.sh

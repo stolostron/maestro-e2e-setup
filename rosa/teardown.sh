@@ -10,11 +10,11 @@ if [ -z "$region" ]; then
     exit 1
 fi
 
-kubectl -n maestro delete -f ${ROOT_DIR}/_output/maestro-rosa.json --ignore-not-found
+oc -n maestro delete -f ${ROOT_DIR}/_output/maestro-rosa.json --ignore-not-found
 for agent_json_file in $(ls ${ROOT_DIR}/_output/maestro-*-rosa.json); do
-    kubectl delete -f ${agent_json_file} --ignore-not-found
+    oc delete -f ${agent_json_file} --ignore-not-found
 done
-kubectl delete ns maestro maestro-agent --ignore-not-found
+oc delete ns maestro maestro-agent --ignore-not-found
 
 # Delete AWS PostgreSQL
 db_status=$(aws rds delete-db-instance --region ${region} --db-instance-identifier maestro --skip-final-snapshot --delete-automated-backups | jq -r '.DBInstance.DBInstanceStatus')
