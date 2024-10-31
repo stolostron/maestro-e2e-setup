@@ -26,7 +26,7 @@ export CONSUMER_ID=""
 make rosa/setup-agent
 ```
 
-## Run a Maestro e2e On a ROSA cluster
+## Run a Maestro e2e on a ROSA cluster
 
 ### Prepare
 
@@ -46,8 +46,9 @@ rosa create cluster --cluster-name=maestro-rosa-e2e --region=us-west-2 --sts --m
 3. Setup e2e env
 
 ```sh
-export REGION=""
-export CLUSTER_ID=""
+export KUBECONFIG="<your_rosa_cluster_kubeconfig>"
+export REGION="<your_rosa_cluster_region>"
+export CLUSTER_ID="<your_rosa_cluster_name_or_id>"
 
 make rosa/setup-e2e
 ```
@@ -71,8 +72,16 @@ ginkgo -v --fail-fast --label-filter="!(e2e-tests-spec-resync-reconnect||e2e-tes
 
 ### Cleanup
 
+1. Run following commands to cleanup the AWS IoT and RDS resources
+
 ```sh
-export KUBECONFIG=""
-export REGION=""
+export KUBECONFIG="<your_rosa_cluster_kubeconfig>"
+export REGION="<your_rosa_cluster_region>"
 make rosa/teardown
+```
+
+2. Delete the ROSA cluster, for example
+
+```sh
+rosa delete cluster --cluster=maestro-rosa-e2e 
 ```
