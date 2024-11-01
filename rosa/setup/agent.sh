@@ -46,7 +46,7 @@ consumer_cert_arn=$(aws iot create-keys-and-certificate \
 echo "Maestro agent AWS IoT client certs are generated ($consumer_cert_arn)"
 
 # Attach policies for AWS IoT clients
-aws_account=$(aws sts get-caller-identity --output json | jq -r '.Account')
+aws_account=$(aws sts get-caller-identity --region ${region} --output json | jq -r '.Account')
 
 echo "Generate AWS IoT policy for Maestro agent ...."
 cat $PWD/aws-iot-policies/consumer.template.json | sed "s/{region}/${region}/g" | sed "s/{aws_account}/${aws_account}/g" | sed "s/{consumer_id}/${consumer_id}/g" > $policies_dir/${consumer_id}.json

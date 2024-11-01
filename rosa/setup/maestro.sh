@@ -55,7 +55,7 @@ echo "Mastro AWS IoT client certs are generated ($maestro_cert_arn)"
 
 # Attach policies for AWS IoT clients
 echo "Generate AWS IoT policy for Maestro ...."
-aws_account=$(aws sts get-caller-identity --output json | jq -r '.Account')
+aws_account=$(aws sts get-caller-identity --region ${region} --output json | jq -r '.Account')
 
 cat $PWD/aws-iot-policies/source.template.json | sed "s/{region}/${region}/g" | sed "s/{aws_account}/${aws_account}/g" > $policies_dir/source.json
 policy_name=$(aws iot create-policy \
