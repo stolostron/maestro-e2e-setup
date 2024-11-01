@@ -29,6 +29,9 @@ maestro_grpc_server_pid=$!
 echo "Maestro GRPC server started: $maestro_grpc_server_pid"
 echo "$maestro_grpc_server_pid" > ${output_dir}/maestro_grpc_server.pid
 
+# need to wait the relay build the connection before we get the consumer id
+sleep 15
+
 # Prepare a consumer
 consumer_id=$(curl -s -X POST -H "Content-Type: application/json" http://127.0.0.1:8000/api/maestro/v1/consumers -d '{}' | jq -r '.id')
 echo $consumer_id > ${output_dir}/consumer_id
