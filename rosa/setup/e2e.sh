@@ -11,7 +11,7 @@ output_dir=${ROOT_DIR}/_output
 
 mkdir -p $output_dir
 
-rosa_infra_id=$(rosa describe cluster -c ${CLUSTER_ID} -ojson | jq -r '.infra_id')
+rosa_infra_id=$(rosa describe cluster --region=${REGION} --cluster=${CLUSTER_ID} -ojson | jq -r '.infra_id')
 vpc=$(aws ec2 describe-vpcs --region=${REGION} \
     --filters Name=tag:Name,Values=${rosa_infra_id}-vpc | jq -r '.Vpcs[0].VpcId')
 

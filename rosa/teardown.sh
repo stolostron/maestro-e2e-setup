@@ -10,10 +10,6 @@ if [ -z "$region" ]; then
     exit 1
 fi
 
-oc -n maestro delete -f ${ROOT_DIR}/_output/maestro-rosa.json --ignore-not-found
-for agent_json_file in $(ls ${ROOT_DIR}/_output/maestro-*-rosa.json); do
-    oc delete -f ${agent_json_file} --ignore-not-found
-done
 oc delete ns maestro maestro-agent --ignore-not-found
 
 # Delete AWS PostgreSQL
