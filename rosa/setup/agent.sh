@@ -71,7 +71,7 @@ oc -n maestro-agent create secret generic maestro-agent-mqtt-creds \
     --from-file=client.crt="${consumer_cert_dir}/${consumer_id}.crt" \
     --from-file=client.key="${consumer_cert_dir}/${consumer_id}.private.key"
 
-oc process --filename="https://raw.githubusercontent.com/skeeey/maestro/refs/heads/rosa/templates/agent-template-rosa.yml" \
+oc process --filename="https://raw.githubusercontent.com/openshift-online/maestro/refs/heads/main/templates/agent-template-rosa.yml" \
     --local="true" \
     --param="AGENT_NAMESPACE=maestro-agent" \
     --param="CONSUMER_NAME=${consumer_id}" \

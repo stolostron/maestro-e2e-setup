@@ -158,7 +158,7 @@ oc -n maestro create secret generic maestro-db \
     --from-literal=db.password="${db_pw}" \
     --from-file=db.ca_cert="${certs_dir}/db-ca.pem"
 
-oc process --filename="https://raw.githubusercontent.com/skeeey/maestro/refs/heads/rosa/templates/service-template-rosa.yml" \
+oc process --filename="https://raw.githubusercontent.com/openshift-online/maestro/refs/heads/main/templates/service-template-rosa.yml" \
     --local="true" \
     --param="IMAGE_REGISTRY=${IMAGE_REGISTRY}" \
     --param="IMAGE_REPOSITORY=${IMAGE_REPOSITORY}" \
