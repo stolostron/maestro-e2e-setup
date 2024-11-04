@@ -102,12 +102,15 @@ if [ $subnets_counts -le 2 ]; then
     done
 fi
 
-db_subnet_group=$(aws rds create-db-subnet-group \
+echo "Creating the PostgrepSQL subnet group maestrosubnetgroup"
+aws rds create-db-subnet-group \
     --region ${region} \
     --db-subnet-group-name maestrosubnetgroup \
     --db-subnet-group-description "Maestro DB subnet group" \
-    --subnet-ids "[${subnets:1}]" | jq -r '.DBSubnetGroup.DBSubnetGroupName')
+    --subnet-ids "[${subnets:1}]" || true
 echo "PostgrepSQL subnet group ${db_subnet_group} is created"
+
+db_subnet_group=$(aws rds describe-db-subnet-groups --region us-east-1 --db-subnet-group-name maestrosubnetgroup | jq -r '.DBSubnetGroups.DBSubnetGroupName')
 
 # Create AWS PostgrepSQL
 db_id=$(aws rds create-db-instance \
